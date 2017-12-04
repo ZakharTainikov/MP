@@ -1,5 +1,5 @@
 function getApiKey() {
-    return "ca5eb2b6cfe44976a01802c54c3db386";
+    return "987df01dfd9c4480932e41fa184170cf";
 }
 
 function loadNewsSourses() {
@@ -45,7 +45,7 @@ function displayNews(sourceId) {
                             <div>
                                 <h3 class="colorRed">${article.title}</h3>
                             </div>
-                            <img scr="${article.urlToImage}" height='300' width='300'>
+                            <div class="img" style="background-image: url('${article.urlToImage}')"></div>                            
                             <div>
                                 <span>${article.description}</span>
                             </div>
