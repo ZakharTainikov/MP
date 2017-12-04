@@ -5,40 +5,30 @@ function getApiKey() {
 function loadNewsSourses() {
     fetch("https://newsapi.org/v2/sources?apiKey=" + getApiKey())
         .then(r => r.json())
-        .then((data) => {
+        .then(data => {
             let { sources } = data;
-            for (var newsSource of sources) {
-                addNewSource(newsSource);
-            }
+            const markup = `                
+                ${sources.map(source =>
+                    `<div class="newsSource">
+                        <table width="100%">
+                            <tr>
+                                <td align="center">
+                                    <h3>${source.name}</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <span class="spanLink" onclick="displayNews('${source.id}');">${source.url}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>`
+                ).join('')}`;
+            document.getElementById("newsContainer").innerHTML = markup;
         })
         .catch((err) => {
             console.log(err);
         });
-}
-
-function addNewSource(news) {
-    let { id, name, description, url, category, language, country } = news;
-
-    let container = document.getElementById("newsContainer");
-    let div = document.createElement("div");
-    div.className += "newsSource"
-    let table = document.createElement("table");
-    table.width = "100%";
-    let tr1 = document.createElement("tr");
-    let tr2 = document.createElement("tr");
-    let td1 = document.createElement("td");
-    td1.align = "center";
-    td1.innerHTML = "<h3>" + name + "</h3>";
-    let td2 = document.createElement("td");
-    td2.align = "center"
-    td2.innerHTML = '<span style="text-decoration:underline; color:blue;" onclick="displayNews(\'' + id + '\');">' + url + '</span>';
-
-    container.appendChild(div);
-    div.appendChild(table);
-    table.appendChild(tr1);
-    table.appendChild(tr2);
-    tr1.appendChild(td1);
-    tr2.appendChild(td2);
 }
 
 function displayNews(sourceId) {
@@ -46,42 +36,31 @@ function displayNews(sourceId) {
     fetch(url)
         .then(r => r.json())
         .then((data) => {
-            clearNews();
+            document.getElementById("screen").innerHTML = "";
             let { articles } = data;
-            for (var article of articles) {
-                addArticle(article);                
-            }
-            scroll(0, 0);           
+            const markup = `                
+                ${articles.map(article =>                    
+                    `<tr>
+                        <td>
+                            <div>
+                                <h3 class="colorRed">${article.title}</h3>
+                            </div>
+                            <img scr="${article.urlToImage}" height='300' width='300'>
+                            <div>
+                                <span>${article.description}</span>
+                            </div>
+                            <div class="newsAuthor">
+                                <b>${article.author ? article.author : ''}</b><br>
+                                <span>${article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() :'' }</span>
+                            </div>
+                        </td>
+                    </tr>`
+                ).join('')}`;
+            document.getElementById("screen").innerHTML = markup;
+            scroll(0, 0);
         })
         .catch((err) => {
-            console.log(err);            
+            console.log(err);
         });
 
-}
-function clearNews() {
-    let screen = document.getElementById("screen");
-    screen.innerHTML = "";
-}
-
-function addArticle(article) {
-    let { source: s, author: a, title: t, description: d, url: u } = article;
-
-    let screen = document.getElementById("screen");
-
-    let tr = document.createElement("tr");
-    
-    let td = document.createElement("td");
-    let author = document.createElement("div");
-    let title = document.createElement("div");
-    let description = document.createElement("div");
-
-    author.innerHTML = "<b>" + a + "</b>";
-    title.innerHTML = "<h3  style='color:red;'>" + t + "</h3>";
-    description.innerText = d;
-
-    screen.appendChild(tr);
-    tr.appendChild(td);
-    td.appendChild(title);
-    td.appendChild(description);
-    td.appendChild(author);
 }
