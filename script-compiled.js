@@ -2,6 +2,7 @@
 
 function getApiKey() {
     return "987df01dfd9c4480932e41fa184170cf";
+    
 }
 
 function loadNewsSourses() {
@@ -9,7 +10,7 @@ function loadNewsSourses() {
         return r.json();
     }).then(function (data) {
         var sources = data.sources;
-
+var s=7;
         var markup = "                \n                " + sources.map(function (source) {
             return "<div class=\"newsSource\">\n                        <table width=\"100%\">\n                            <tr>\n                                <td align=\"center\">\n                                    <h3>" + source.name + "</h3>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td align=\"center\">\n                                    <span class=\"spanLink\" onclick=\"displayNews('" + source.id + "');\">" + source.url + "</span>\n                                </td>\n                            </tr>\n                        </table>\n                    </div>";
         }).join('');
