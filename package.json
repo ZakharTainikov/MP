@@ -1,0 +1,27 @@
+{
+  "name": "babel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Task1.js",
+  "dependencies": {
+    "babel-loader": "^7.1.2",
+    "fetch-polyfill": "^0.8.2",
+    "promise-polyfill": "^6.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-dynamic-import-webpack": "^1.0.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015-ie": "^6.7.0",
+    "css-loader": "^0.28.7",
+    "es-module-loader": "^2.2.8",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "build-prod": "webpack --config webpack.config.js -p --display-error-details",
+    "build-dev": "webpack --config webpack.config.js -d --display-error-details"
+  },
+  "author": "",
+  "license": "ISC"
+} 
