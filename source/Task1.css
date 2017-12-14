@@ -17,14 +17,17 @@
     color: red;
 }
 
+.newsScreen {
+    max-width: 1024px;
+}
+
 .newsAuthor {
     text-align: right;
 }
 
 .img {
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    width: 650px;
-    height: 350px;
-    display:block;
+    max-width: 1024px;
+    display: block;
 }
