@@ -1,3 +1,5 @@
+
+
 import { getApiKey } from "./Task1";
 
 export default function displayNews(sourceId, page) {
@@ -5,7 +7,6 @@ export default function displayNews(sourceId, page) {
     fetch(url)
         .then(r => r.json())
         .then((data) => {
-            document.getElementById("screen").innerHTML = "";
             let { articles } = data;
             const markup = `
                 <table width="100%">
@@ -15,7 +16,9 @@ export default function displayNews(sourceId, page) {
                             <div>
                                 <h3 class="colorRed">${article.title}</h3>
                             </div>
-                            <div class="img" style="background-image: url('${article.urlToImage ? article.urlToImage : ''}')"></div>                            
+                            <div class="img" style="background-image: url('${article.urlToImage ? article.urlToImage : ''}')">
+                                <img class="img" src='${article.urlToImage ? article.urlToImage : ''}' style="visibility: hidden;" />
+                            </div>                            
                             <div>
                                 <span>${article.description}</span>
                             </div>
