@@ -9,16 +9,19 @@ function displayNews(sourceId) {
     fetch(url)
         .then(r => r.json())
         .then((data) => {
-            document.getElementById("screen").innerHTML = "";
+            document.getElementById("newsScreen").innerHTML = "";
             let { articles } = data;
-            const markup = `                
+            const markup = `
+                <table width="100%">
                 ${articles.map(article =>
                     `<tr>
-                        <td>
+                        <td align="center">
                             <div>
                                 <h3 class="colorRed">${article.title}</h3>
                             </div>
-                            <div class="img" style="background-image: url('${article.urlToImage ? article.urlToImage : ''}')"></div>                            
+                            <div class="img" style="background-image: url('${article.urlToImage ? article.urlToImage : ''}')">
+                                <img class="img" src='${article.urlToImage ? article.urlToImage : ''}' style="visibility: hidden;" />
+                            </div>                            
                             <div>
                                 <span>${article.description}</span>
                             </div>
@@ -28,8 +31,9 @@ function displayNews(sourceId) {
                             </div>
                         </td>
                     </tr>`
-                ).join('')}`;
-            document.getElementById("screen").innerHTML = markup;
+                ).join('')}
+                </table>`;
+            document.getElementById("newsScreen").innerHTML = markup;
             scroll(0, 0);
         })
         .catch((err) => {
@@ -79,20 +83,8 @@ function attachDisplayNewsHandler() {
     }
 }
 
-function initPushMe() {
-    let pushMe = document.getElementById("pushMe");
-    pushMe.onclick = e => import(/* webpackChunkName: "SomeMod" */ './SomeMod')
-        .then(module => {
-            let source = pushMe.getAttribute("data-news-source");
-            let pageId = pushMe.getAttribute("data-page-id");
-            module.default(source, pageId);
-            let nextPage = Number(pageId) + 1;
-            pushMe.setAttribute("data-page-id", nextPage);
-        }).catch(error => console.log('An error occurred while loading the component - ' + error));
 
-}
 window.addEventListener("load", function () {
     loadNewsSourses();
-    initPushMe();
 });
 
