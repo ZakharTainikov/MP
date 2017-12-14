@@ -2,13 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Task 1</title>
-    <link rel="stylesheet" href="Task1.css" />
-    <script src="promise-polyfill.js"></script>
-    <script src="fetch-polyfill.js"></script>
-    <script src="script-compiled.js"></script>
+    <title>Task 1</title>    
+    <script src="dist/polys.bundle.js"></script>
+    <script src="dist/task1.bundle.js"></script> 
 </head>
-<body onload="loadNewsSourses()">    
+<body>    
     <table width="100%">
         <tr>
             <td align="center">
@@ -19,5 +17,7 @@
             </td>
         </tr>
     </table>
+    <div id="newsScreen"></div>
+    <button id="pushMe" data-news-source="bbc-news" data-page-id="1">Load News</button>
 </body>
 </html>
