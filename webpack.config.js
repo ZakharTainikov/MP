@@ -4,8 +4,7 @@ const webpack = require('webpack');
 module.exports = {
     entry:
     {
-        task1: "./source/Task1.js",
-        task2: "./source/Task2.js",
+        index: "./source/index.js",
         polys: [
             "babel-polyfill",
             "promise-polyfill",
