@@ -39,6 +39,34 @@ let Article = function () {
     }
 };
 
+let ArticleProxy = function (info) {
+    let a = new Article();
+    a.title = info.title;
+    a.urlToImage = info.urlToImage;
+    a.description = info.description;
+    a.author = info.author;
+    a.publishedAt = info.publishedAt;
+
+    return {
+        toHtml: function () {
+            return a.toHtml();
+        }
+    }
+}
+
+let NewsSourceProxy = function (info) {
+    let s = new NewsSource();
+    s.id = info.id;
+    s.name = info.name;
+    s.url = info.url;
+
+    return {
+        toHtml: function () {
+            return s.toHtml();
+        }
+    }
+}
+
 let NewsSource = function () {
     this.name = "";
     this.id = "";
@@ -75,20 +103,10 @@ let NewsSource = function () {
 export function newsFactory() {
     return {
         createArticle: function (info) {
-            let a = new Article();
-            a.title = info.title;
-            a.urlToImage = info.urlToImage;
-            a.description = info.description;
-            a.author = info.author;
-            a.publishedAt = info.publishedAt;
-            return a;
+            return ArticleProxy(info);
         },
         createNewsSource: function (info) {
-            let s = new NewsSource();
-            s.id = info.id;
-            s.name = info.name;
-            s.url = info.url;
-            return s;
+            return new NewsSourceProxy(info);
         }
     }
 }
