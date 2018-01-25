@@ -70,7 +70,7 @@ let NewsSourceProxy = function (info) {
 let NewsSource = function () {
     this.name = "";
     this.id = "";
-    this.url = ""
+    this.url = "";
 
     this.toHtml = function () {
         const markup =
@@ -82,7 +82,7 @@ let NewsSource = function () {
                         </td>
                     </tr>
                     <tr>
-                        <td align="center">                                    
+                        <td align="center">
                             <span class="sourceLink" data-id='${this.id}'>${this.url}</span>
                         </td>
                     </tr>
@@ -100,14 +100,29 @@ let NewsSource = function () {
     }
 };
 
-export function newsFactory() {
-    return {
-        createArticle: function (info) {
-            return ArticleProxy(info);
-        },
-        createNewsSource: function (info) {
-            return new NewsSourceProxy(info);
-        }
+let NewsFactory = function () {
+    this.createArticle = function (info) {
+        return ArticleProxy(info);
+    };
+    this.createNewsSource = function (info) {
+        return new NewsSourceProxy(info);
     }
+};
+
+let MySingleton = (function () {
+    let factory;
+
+    return {
+        Factory: function () {
+            if (!factory) {
+                factory = new NewsFactory();
+            }
+            return factory;
+        }
+    };
+})();
+
+export function newsFactory() {
+    return MySingleton.Factory();
 }
 
