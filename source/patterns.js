@@ -103,7 +103,8 @@ let NewsSource = function () {
 let NewsFactory = function () {
     this.createArticle = function (info) {
         return ArticleProxy(info);
-    };
+    }
+    
     this.createNewsSource = function (info) {
         return new NewsSourceProxy(info);
     }
