@@ -34,13 +34,7 @@ app.delete('/blogs/:id', function (req, res, next) {
 });
 
 app.all('*', function (req, res, next) {
-    let api = `GET / blogs 
-    GET / blogs / { id }
-    POST / blogs
-    PUT / blogs / { id }
-    DELETE / blogs / { id }`;
-
-    res.render('errorPage', { message: api })
+    res.render('errorPage')
 });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
