@@ -1,6 +1,10 @@
 ﻿const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
 app.set('view engine', 'pug')
 
 mongoose.connect('mongodb://localhost/frontcamp');
@@ -9,10 +13,6 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 const blogSchema = mongoose.Schema({
     name: String
 });
-
-blogSchema.methods.print = function () {
-    return "<div>Blog: " + this.name + " Id: " + this._id + "</div>";
-}
 
 const Blog = mongoose.model('Blog', blogSchema);
 
@@ -25,19 +25,8 @@ app.get('/blogs', function (req, res, next) {
     console.log(message);
 
     Blog.find(function (err, blogs) {
-        if (err) return res.send(err);
-
-        let ar = [];
-        for (let i = 0; i < blogs.length; i++) {
-            ar.push(blogs[i].print());
-        }
-
-        if (ar.length > 0) {
-            res.send(ar.join(" "));
-        }
-        else {
-            res.send("Not Found.");
-        }
+        if (err) return res.next(err);
+        res.json(blogs);
     });
 });
 
@@ -47,9 +36,7 @@ app.get('/blogs/:id', function (req, res, next) {
 
     Blog.findById(req.params.id, function (err, blog) {
         if (err) return next(err);
-        if (!blog) return res.send("Not Found.");
-
-        return res.send(blog.print());
+        res.json(blog);
     });
 });
 
@@ -59,18 +46,17 @@ app.post('/blogs', function (req, res, next) {
 
     Blog.create({ name: 'NoName Blog' }, function (err, blog) {
         if (err) return next(err);
-        // saved!
-        return res.send(blog.print());
+        res.json(blog);
     })
 });
 
-app.put('/blogs/:id-:name', function (req, res, next) {
-    let message = "Method: PUT, Path: /blogs/" + req.params.id + "-" + req.params.name;
+app.put('/blogs/:id', function (req, res, next) {
+    let message = "Method: PUT, Path: /blogs/" + req.params.id;
     console.log(message);
 
-    Blog.findByIdAndUpdate(req.params.id, { name: req.params.name }, function (err, blog) {
+    Blog.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, blog) {
         if (err) return next(err);
-        return res.send("Updated");
+        res.json(blog);
     });
 });
 
@@ -80,7 +66,7 @@ app.delete('/blogs/:id', function (req, res, next) {
 
     Blog.findByIdAndRemove(req.params.id, function (err, blog) {
         if (err) return next(err);
-        return res.send("Removed.");
+        res.json(blog);
     });
 });
 
