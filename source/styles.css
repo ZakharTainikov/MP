@@ -1,10 +1,26 @@
-.newsSource {
+﻿.newsSource {
     border: 1px solid black;
     border-radius: 5px;
     width: 300px;
     padding: 5px;
     margin: 5px;
     float: left;
+}
+
+.buttonX{
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    background-color: transparent;
+}
+
+.blog {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 300px;
+    padding: 5px;
+    margin: 5px;
 }
 
 .sourceLink {
@@ -15,6 +31,9 @@
 
 .colorRed {
     color: red;
+}
+.colorBlue {
+    color: blue;
 }
 
 .newsScreen {
