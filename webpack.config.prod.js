@@ -4,6 +4,7 @@ const webpack = require('webpack');
 module.exports = {
     entry:
     {
+        blogClient: "./source/blogClient.jsx",
         index: "./source/index.js",
         polys: [
             "babel-polyfill",
@@ -24,7 +25,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: "babel-loader",
                 options: {
-                    presets: ["env", "es2015-ie"]
+                    presets: ["env", "es2015-ie", "react"]
                 }
             },
             {

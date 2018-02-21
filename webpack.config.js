@@ -4,27 +4,29 @@ const webpack = require('webpack');
 module.exports = {
     entry:
     {
+        
         index: "./source/index.js",
         polys: [
             "babel-polyfill",
             "promise-polyfill",
             "fetch-polyfill"
-        ]
+        ],
+        blogClient: "./source/blogClient.jsx"
     }
     ,
     output: {
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/MP/dist/'
+        publicPath: '/dist/'
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 loader: "babel-loader",
                 options: {
-                    presets: ["env", "es2015-ie"]
+                    presets: ["react", "env", "es2015-ie" ]
                 }
             },
             {
